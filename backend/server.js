@@ -11,6 +11,10 @@ app.use(cors());
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
 app.use("/api/farms", farmRouter);
 
 const PORT = process.env.PORT || 8080;

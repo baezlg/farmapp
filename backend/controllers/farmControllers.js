@@ -69,6 +69,66 @@ const farmController = {
     }
     res.status(200).json("item deleted");
   }),
+  farmStats: catchAsync(async (req, res) => {
+    const stats = await Farm.aggregate([
+      {
+        $group: {
+          _id: "$sensorType",
+          numFarms: { $sum: 1 },
+          avgValue: { $avg: "$value" },
+          minValue: { $min: "$value" },
+          maxValue: { $max: "$value" },
+        },
+      },
+      {
+        $addFields: { location: "$_id" },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    if (!stats) {
+      res.status(401).json("farm not found");
+    }
+    res.status(200).json(stats);
+  }),
+  farmMonthlyStats: catchAsync(async (req, res) => {
+    const year = req.params.year * 1;
+    const stats = await Farm.aggregate([
+      {
+        $match: {
+          datetime: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: "$datetime" },
+          numFarms: { $sum: 1 },
+          farms: { $addToSet: "$location" },
+          avgValue: { $avg: "$value" },
+          minValue: { $min: "$value" },
+          maxValue: { $max: "$value" },
+        },
+      },
+      {
+        $addFields: { month: "$_id" },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    if (!stats) {
+      res.status(401).json("farm not found");
+    }
+    res.status(200).json(stats);
+  }),
 };
 
 export default farmController;
