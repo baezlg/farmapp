@@ -8,6 +8,7 @@ const Home = () => {
         <label>
           Location:{" "}
           <select>
+            <option value="">all</option>
             <option value="Friman Metsola collective">
               Friman Metsola collective
             </option>
@@ -23,6 +24,7 @@ const Home = () => {
         <label>
           sensorType:{" "}
           <select>
+            <option value="">all</option>
             <option value="pH">pH</option>
             <option value="rainFall">rainFall</option>
             <option value="temperature">temperature</option>

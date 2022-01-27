@@ -2,7 +2,8 @@ import express from "express";
 const router = express.Router();
 import farmController from "../controllers/farmControllers.js";
 
-router.get("/stats", farmController.farmStats);
+router.get("/stats/by-location", farmController.farmStatsbyLocation);
+router.get("/stats/by-sensortype", farmController.farmStatsbySensorType);
 router.get("/stats/monthly-stats/:year", farmController.farmMonthlyStats);
 router
   .route("/")

@@ -69,7 +69,32 @@ const farmController = {
     }
     res.status(200).json("item deleted");
   }),
-  farmStats: catchAsync(async (req, res) => {
+  farmStatsbyLocation: catchAsync(async (req, res) => {
+    const stats = await Farm.aggregate([
+      {
+        $group: {
+          _id: "$location",
+          numFarms: { $sum: 1 },
+          avgValue: { $avg: "$value" },
+          minValue: { $min: "$value" },
+          maxValue: { $max: "$value" },
+        },
+      },
+      {
+        $addFields: { location: "$_id" },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    if (!stats) {
+      res.status(401).json("farm not found");
+    }
+    res.status(200).json(stats);
+  }),
+  farmStatsbySensorType: catchAsync(async (req, res) => {
     const stats = await Farm.aggregate([
       {
         $group: {
@@ -81,7 +106,7 @@ const farmController = {
         },
       },
       {
-        $addFields: { location: "$_id" },
+        $addFields: { sensorType: "$_id" },
       },
       {
         $project: {
