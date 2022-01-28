@@ -47,3 +47,28 @@
   gap: 3rem;
   margin: 5rem;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  gap: 0.4rem;
+
+  .disabled {
+    background-color: gray !important;
+  }
+
+  &__item {
+    padding: 1rem;
+    background-color: var(--primary-color);
+    cursor: pointer;
+
+    &.active {
+      background-color: var(--white);
+      border: 1px solid var(--primary-color);
+    }
+    &.disabled {
+      background-color: gray;
+    }
+  }
+}
