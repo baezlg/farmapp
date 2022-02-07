@@ -25,7 +25,6 @@ const Home = () => {
       setItems(data.data);
       setItemCount(data.totalFarms);
       setTotalPage(data.pages);
-      console.log(data);
     };
     getFarms();
   }, [page, filter.location, filter.sensorType]);
@@ -39,7 +38,10 @@ const Home = () => {
         <label>
           Location:{" "}
           <select
-            onChange={(e) => setFilter({ ...filter, location: e.target.value })}
+            onChange={(e) => {
+              setPage(1);
+              setFilter({ ...filter, location: e.target.value });
+            }}
           >
             <option value="">all</option>
             <option value="Friman Metsola collective">
@@ -57,9 +59,10 @@ const Home = () => {
         <label>
           sensorType:{" "}
           <select
-            onChange={(e) =>
-              setFilter({ ...filter, sensorType: e.target.value })
-            }
+            onChange={(e) => {
+              setPage(1);
+              setFilter({ ...filter, sensorType: e.target.value });
+            }}
           >
             <option value="">all</option>
             <option value="pH">pH</option>
@@ -95,7 +98,7 @@ const Home = () => {
         nextLabel={"next"}
         breakLabel={"..."}
         pageCount={totalPage}
-        marginPagesDisplayed={6}
+        marginPagesDisplayed={4}
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}
         containerClassName={"pagination"}

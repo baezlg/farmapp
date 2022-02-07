@@ -4,4 +4,19 @@
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
   font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__links {
+    display: flex;
+    gap: 2rem;
+  }
+  &__link {
+    text-transform: uppercase;
+    transition: var(--transition);
+    &:hover {
+      color: var(--black);
+    }
+  }
 }

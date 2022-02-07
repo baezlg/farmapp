@@ -141,6 +141,9 @@ const farmController = {
         },
       },
       {
+        $sort: { _id: 1 },
+      },
+      {
         $addFields: { month: "$_id" },
       },
       {

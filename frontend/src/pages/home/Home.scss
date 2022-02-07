@@ -50,6 +50,8 @@
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   list-style-type: none;
   gap: 0.4rem;
